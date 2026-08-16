@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>California DMV Practice Test</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="start-screen" class="screen active">
+            <div class="card start-card">
+                <div class="logo" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="8"/>
+                        <circle cx="12" cy="12" r="2"/>
+                        <path d="M12 4v2M12 18v2M4 12h2M18 12h2"/>
+                    </svg>
+                </div>
+                <h1>California DMV Practice Test</h1>
+                <p class="subtitle">Study for the Class C knowledge test with questions based on the California Driver Handbook.</p>
+
+                <div class="mode-grid" role="group" aria-label="Test length">
+                    <button type="button" class="mode-btn selected" data-mode="adult">
+                        <span class="mode-title">Adult test</span>
+                        <span class="mode-detail">36 questions · 30 to pass</span>
+                    </button>
+                    <button type="button" class="mode-btn" data-mode="teen">
+                        <span class="mode-title">Under 18</span>
+                        <span class="mode-detail">46 questions · 38 to pass</span>
+                    </button>
+                    <button type="button" class="mode-btn" data-mode="quick">
+                        <span class="mode-title">Quick practice</span>
+                        <span class="mode-detail">20 questions · 16 to pass</span>
+                    </button>
+                </div>
+
+                <div class="test-info">
+                    <div class="info-item">
+                        <span class="info-label">Question bank</span>
+                        <span class="info-value" id="bank-count">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Passing score</span>
+                        <span class="info-value">~83%</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Time limit</span>
+                        <span class="info-value">None</span>
+                    </div>
+                </div>
+
+                <button id="start-btn" class="btn btn-primary">Start practice test</button>
+                <p class="hint">Questions are shuffled each time. You’ll see the explanation after every answer.</p>
+                <p class="disclaimer">Study aid only — not affiliated with the California DMV. Confirm current rules in the <a href="https://www.dmv.ca.gov/portal/handbook/california-driver-handbook/" target="_blank" rel="noopener noreferrer">official handbook</a>. <a href="/">Hosted projects</a></p>
+            </div>
+        </div>
+
+        <div id="quiz-screen" class="screen">
+            <div class="card quiz-card">
+                <div class="quiz-header">
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div id="progress-fill" class="progress-fill"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="question-number">Question 1</span>
+                            <span id="score-display">Correct: 0</span>
+                        </div>
+                    </div>
+                    <button type="button" id="end-btn" class="btn-text">End test</button>
+                </div>
+                <div id="question-container">
+                    <span id="category-tag" class="category-tag"></span>
+                    <h2 id="question-text" class="question-text"></h2>
+                    <div id="options-container" class="options-container"></div>
+                </div>
+                <div id="feedback-container" class="feedback-container hidden">
+                    <div id="feedback-message" class="feedback-message"></div>
+                    <div id="explanation" class="explanation"></div>
+                </div>
+                <div class="quiz-footer">
+                    <button id="next-btn" class="btn btn-primary hidden">Next question</button>
+                    <button id="submit-btn" class="btn btn-primary hidden">See results</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="results-screen" class="screen">
+            <div class="card results-card">
+                <div id="result-icon" class="result-icon"></div>
+                <h1 id="result-title">Test complete</h1>
+                <div class="score-circle" id="score-circle">
+                    <span id="final-score">0%</span>
+                </div>
+                <p id="result-message" class="result-message"></p>
+                <div class="result-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Correct</span>
+                        <span id="correct-count" class="stat-value correct">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Incorrect</span>
+                        <span id="incorrect-count" class="stat-value incorrect">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Total</span>
+                        <span id="total-count" class="stat-value">0</span>
+                    </div>
+                </div>
+                <div class="results-actions">
+                    <button id="review-btn" class="btn btn-secondary">Review answers</button>
+                    <button id="retry-btn" class="btn btn-primary">Take another test</button>
+                    <button id="home-btn" class="btn btn-secondary">Home</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="review-screen" class="screen">
+            <div class="card review-card">
+                <h1>Answer review</h1>
+                <div id="review-container" class="review-container"></div>
+                <div class="review-actions">
+                    <button id="back-to-results-btn" class="btn btn-secondary">Back to results</button>
+                    <button id="retry-from-review-btn" class="btn btn-primary">Take another test</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="questions.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
