@@ -18,9 +18,22 @@
                     </svg>
                 </div>
                 <h1>California DMV Practice Test</h1>
-                <p class="subtitle">Study for the Class C knowledge test with questions based on the California Driver Handbook.</p>
+                <p class="subtitle" id="subtitle">Study for the Class C knowledge test with questions based on the California Driver Handbook.</p>
 
-                <div class="mode-grid" role="group" aria-label="Test length">
+                <p class="choice-label">License</p>
+                <div class="license-grid" role="group" aria-label="License type">
+                    <button type="button" class="mode-btn selected" data-license="car">
+                        <span class="mode-title">Car (Class C)</span>
+                        <span class="mode-detail">Driver’s license / permit</span>
+                    </button>
+                    <button type="button" class="mode-btn" data-license="motorcycle">
+                        <span class="mode-title">Motorcycle (M1/M2)</span>
+                        <span class="mode-detail">Bike knowledge test</span>
+                    </button>
+                </div>
+
+                <p class="choice-label">Test length</p>
+                <div id="car-modes" class="mode-grid" role="group" aria-label="Car test length">
                     <button type="button" class="mode-btn selected" data-mode="adult">
                         <span class="mode-title">Adult test</span>
                         <span class="mode-detail">36 questions · 30 to pass</span>
@@ -34,6 +47,16 @@
                         <span class="mode-detail">20 questions · 16 to pass</span>
                     </button>
                 </div>
+                <div id="moto-modes" class="mode-grid cols-2 hidden" role="group" aria-label="Motorcycle test length">
+                    <button type="button" class="mode-btn" data-mode="moto">
+                        <span class="mode-title">Knowledge test</span>
+                        <span class="mode-detail">30 questions · 24 to pass</span>
+                    </button>
+                    <button type="button" class="mode-btn" data-mode="motoQuick">
+                        <span class="mode-title">Quick practice</span>
+                        <span class="mode-detail">15 questions · 12 to pass</span>
+                    </button>
+                </div>
 
                 <div class="test-info">
                     <div class="info-item">
@@ -42,7 +65,7 @@
                     </div>
                     <div class="info-item">
                         <span class="info-label">Passing score</span>
-                        <span class="info-value">~83%</span>
+                        <span class="info-value" id="pass-rate">~83%</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Time limit</span>
@@ -52,7 +75,7 @@
 
                 <button id="start-btn" class="btn btn-primary">Start practice test</button>
                 <p class="hint">Questions are shuffled each time. You’ll see the explanation after every answer.</p>
-                <p class="disclaimer">Study aid only — not affiliated with the California DMV. Confirm current rules in the <a href="https://www.dmv.ca.gov/portal/handbook/california-driver-handbook/" target="_blank" rel="noopener noreferrer">official handbook</a>. <a href="/">Hosted projects</a></p>
+                <p class="disclaimer">Study aid only — not affiliated with the California DMV. Confirm current rules in the <a id="handbook-link" href="https://www.dmv.ca.gov/portal/handbook/california-driver-handbook/" target="_blank" rel="noopener noreferrer">official handbook</a>. <a href="/">Hosted projects</a></p>
             </div>
         </div>
 
@@ -131,6 +154,7 @@
     <script src="questions-extra.js"></script>
     <script src="questions-extra-2.js"></script>
     <script src="questions-extra-3.js"></script>
+    <script src="questions-motorcycle.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

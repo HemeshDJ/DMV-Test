@@ -1,5 +1,22 @@
 const LETTERS = ["A", "B", "C", "D"];
 
+const LICENSES = {
+    car: {
+        subtitle: "Study for the Class C knowledge test with questions based on the California Driver Handbook.",
+        handbookHref: "https://www.dmv.ca.gov/portal/handbook/california-driver-handbook/",
+        handbookLabel: "official handbook",
+        passRate: "~83%",
+        defaultMode: "adult"
+    },
+    motorcycle: {
+        subtitle: "Study for the M1/M2 motorcycle knowledge test with questions based on the California Motorcycle Handbook.",
+        handbookHref: "https://www.dmv.ca.gov/portal/handbook/motorcycle-handbook/",
+        handbookLabel: "motorcycle handbook",
+        passRate: "80%",
+        defaultMode: "moto"
+    }
+};
+
 const MODES = {
     adult: {
         title: "Adult knowledge test",
@@ -18,10 +35,23 @@ const MODES = {
         detail: "20 questions · 80% to pass",
         count: 20,
         passCount: 16
+    },
+    moto: {
+        title: "Motorcycle knowledge test",
+        detail: "30 questions · miss no more than 6",
+        count: 30,
+        passCount: 24
+    },
+    motoQuick: {
+        title: "Quick motorcycle practice",
+        detail: "15 questions · 80% to pass",
+        count: 15,
+        passCount: 12
     }
 };
 
 const state = {
+    license: "car",
     mode: "adult",
     questions: [],
     index: 0,
@@ -35,6 +65,12 @@ const els = {
     resultsScreen: document.getElementById("results-screen"),
     reviewScreen: document.getElementById("review-screen"),
     bankCount: document.getElementById("bank-count"),
+    passRate: document.getElementById("pass-rate"),
+    subtitle: document.getElementById("subtitle"),
+    handbookLink: document.getElementById("handbook-link"),
+    licenseButtons: document.querySelectorAll("[data-license]"),
+    carModes: document.getElementById("car-modes"),
+    motoModes: document.getElementById("moto-modes"),
     modeButtons: document.querySelectorAll("[data-mode]"),
     startBtn: document.getElementById("start-btn"),
     endBtn: document.getElementById("end-btn"),
@@ -97,10 +133,15 @@ function correctSoFar() {
     return state.answers.filter((answer) => answer && answer.isCorrect).length;
 }
 
+function currentBank() {
+    return state.license === "motorcycle" ? MOTORCYCLE_BANK : QUESTION_BANK;
+}
+
 function startTest() {
     const mode = MODES[state.mode];
-    const count = Math.min(mode.count, QUESTION_BANK.length);
-    state.questions = shuffle(QUESTION_BANK).slice(0, count).map(prepareQuestion);
+    const bank = currentBank();
+    const count = Math.min(mode.count, bank.length);
+    state.questions = shuffle(bank).slice(0, count).map(prepareQuestion);
     state.index = 0;
     state.answers = new Array(count).fill(null);
     state.locked = false;
@@ -259,6 +300,31 @@ function selectMode(mode) {
     });
 }
 
+function selectLicense(license) {
+    state.license = license;
+    els.licenseButtons.forEach((button) => {
+        button.classList.toggle("selected", button.dataset.license === license);
+    });
+    const isMoto = license === "motorcycle";
+    els.carModes.classList.toggle("hidden", isMoto);
+    els.motoModes.classList.toggle("hidden", !isMoto);
+    selectMode(LICENSES[license].defaultMode);
+    updateStartScreen();
+}
+
+function updateStartScreen() {
+    const license = LICENSES[state.license];
+    els.subtitle.textContent = license.subtitle;
+    els.passRate.textContent = license.passRate;
+    els.bankCount.textContent = String(currentBank().length);
+    els.handbookLink.href = license.handbookHref;
+    els.handbookLink.textContent = license.handbookLabel;
+}
+
+els.licenseButtons.forEach((button) => {
+    button.addEventListener("click", () => selectLicense(button.dataset.license));
+});
+
 els.modeButtons.forEach((button) => {
     button.addEventListener("click", () => selectMode(button.dataset.mode));
 });
@@ -297,5 +363,4 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-els.bankCount.textContent = String(QUESTION_BANK.length);
-selectMode("adult");
+selectLicense("car");
