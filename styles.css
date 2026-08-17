@@ -135,11 +135,36 @@ h1 {
     color: var(--primary);
 }
 
+.choice-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-align: left;
+    margin: 0 0 8px;
+}
+
+.license-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
 .mode-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
     margin-bottom: 24px;
+}
+
+.mode-grid.cols-2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.mode-grid.hidden {
+    display: none;
 }
 
 .mode-btn {
@@ -586,7 +611,9 @@ h1 {
         padding: 20px;
     }
     
-    .mode-grid {
+    .license-grid,
+    .mode-grid,
+    .mode-grid.cols-2 {
         grid-template-columns: 1fr;
     }
 
